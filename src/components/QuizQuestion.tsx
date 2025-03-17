@@ -24,21 +24,23 @@ export function QuizQuestion({
           const isCorrect = isSubmitted && option === question.correctAnswer;
           const isIncorrect = isSubmitted && option === selectedAnswer && option !== question.correctAnswer;
           
+          const buttonClassName = [
+            'w-full p-4 text-left rounded-lg transition-all border',
+            selectedAnswer === option
+              ? isCorrect
+                ? 'bg-green-100 border-green-500'
+                : isIncorrect
+                ? 'bg-red-100 border-red-500'
+                : 'bg-blue-100 border-blue-500'
+              : 'bg-white hover:bg-gray-50',
+            isSubmitted ? 'cursor-default' : 'cursor-pointer'
+          ].join(' ');
+          
           return (
             <button
               key={index}
               onClick={() => !isSubmitted && onSelectAnswer(option)}
-              className={`w-full p-4 text-left rounded-lg transition-all ${
-                selectedAnswer === option
-                  ? isCorrect
-                    ? 'bg-green-100 border-green-500'
-                    : isIncorrect
-                    ? 'bg-red-100 border-red-500'
-                    : 'bg-blue-100 border-blue-500'
-                  : 'bg-white hover:bg-gray-50'
-              } border ${
-                isSubmitted ? 'cursor-default' : 'cursor-pointer'
-              }`}
+              className={buttonClassName}
               disabled={isSubmitted}
             >
               {option}
